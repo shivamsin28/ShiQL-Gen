@@ -1,0 +1,25 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #ff000000;
+    color: white;
+}
+
+footer {
+    background-color: #343a40;
+    color: rgba(255, 255, 255, 0);
+}
+
+.container {
+    max-width: 960px;
+}
+
+.form-control {
+    margin-bottom: 15px;
+}
+
+.btn-block {
+    width: 100%;
+}
