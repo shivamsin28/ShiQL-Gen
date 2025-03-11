@@ -43,23 +43,6 @@ def index():
 def about():
     return render_template('about.html')
 
-
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['email']
-        password = request.form['password']
-        user = User.query.filter_by(username=username).first() or User.query.filter_by(email=username).first()
-        if user:
-            if user.check_password(password):
-                session['user'] = user.username
-                return redirect(url_for('dashboard'))
-            else:
-                flash('Invalid username or password')
-        flash('Invalid username or password')
-    return render_template('login.html')
-
 @app.route("/dashboard")
 def dashboard():
     return render_template("dashboard.html")
