@@ -1,15 +1,126 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
 <div class="container">
-    home page
+    <div class="d-flex flex-column align-items-center">
+        <div class="hero text-center">
+            <h1 class="site-title">ShiQL-Gen</h1>
+            <p>Your ultimate tool for generating SQL queries effortlessly.</p>
+            <a href="#features" class="btn btn-primary">Learn More</a>
+        </div>
+        <div id="features" class="features text-center mt-4">
+            <h2>Features</h2>
+            <ul class="list-unstyled">
+                <li>Generate SQL queries with ease</li>
+                <li>Customizable templates</li>
+                <li>Seamless integration</li>
+            </ul>
+        </div>
+        <!-- Testimonials Section -->
+        <div id="testimonials" class="testimonials text-center mt-5">
+            <h2>What Our Users Say</h2>
+            <div class="mt-4">
+                <blockquote class="blockquote">
+                    <p>"ShiQL-Gen has revolutionized the way we handle SQL queries. It's a game-changer!"</p>
+                    <footer class="blockquote-footer">John Doe, Software Engineer</footer>
+                </blockquote>
+                <blockquote class="blockquote mt-4">
+                    <p>"The customizable templates save us so much time. Highly recommended!"</p>
+                    <footer class="blockquote-footer">Jane Smith, Data Analyst</footer>
+                </blockquote>
+            </div>
+        </div>
+        <!-- Contact Us Section -->
+        <div id="contact" class="contact text-center mt-5">
+            <h2>Contact Us</h2>
+            <p>Have questions or need support? Reach out to us!</p>
+            <form class="mt-4">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Your Name" required>
+                </div>
+                <div class="form-group mt-3">
+                    <input type="email" class="form-control" placeholder="Your Email" required>
+                </div>
+                <div class="form-group mt-3">
+                    <textarea class="form-control" rows="4" placeholder="Your Message" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Send Message</button>
+            </form>
+        </div>
+    </div>
 </div>
-
-
-
 {% endblock %}
 
 {% block css %}
-   
+<style>
+    .hero {
+        padding: 70px 30px;
+        background-color: #f8f9fa;
+    }
+    .hero .site-title {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 30px;
+        color: #333;
+    }
+    .hero p {
+        font-size: 1.5rem;
+        margin-bottom: 40px;
+    }
+    .btn-primary {
+        background-color: #660666;
+        color: white;
+        padding: 15px 30px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 1.2rem;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .btn-primary:hover {
+        background-color: #550055;
+        transform: scale(1.05);
+    }
+    .features {
+        margin-top: 70px;
+    }
+    .features h2 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+    .features ul {
+        padding: 0;
+    }
+    .features li {
+        font-size: 1.2rem;
+        margin: 15px 0;
+    }
+    .testimonials {
+        margin-top: 70px;
+    }
+    .testimonials h2 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+    .blockquote {
+        font-size: 1.2rem;
+        color: #555;
+    }
+    .blockquote-footer {
+        font-size: 1rem;
+        color: #777;
+    }
+    .contact {
+        margin-top: 70px;
+    }
+    .contact h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+    .contact form .form-control {
+        font-size: 1rem;
+    }
+    .contact form button {
+        font-size: 1.2rem;
+    }
+</style>
 {% endblock %}
