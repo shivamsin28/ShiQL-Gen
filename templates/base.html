@@ -5,135 +5,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShiQL Gen</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="static/css/styles.css">
-    {% block css %}
+    {% block css %}{% endblock %}
     <style>
-        .header-logo {
-            max-width: 1px; /* Resize the logo */
-            height: 1px; /* Set a fixed height */
-            object-fit: cover; /* Crop the logo */
-        }
-        .hs-collapse-toggle {
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-        .hs-collapse-toggle:hover {
-            background-color: #e2e2e2; /* Light gray for hover */
-            transform: scale(1.1); /* Slightly enlarge on hover */
-        }
-        a {
-            transition: color 0.3s ease;
-        }
-        a:hover {
-            color: #550055; /* Darker shade for hover */
+        .navbar-brand:hover {
+            transform: scale(1.1); /* Slightly enlarge the logo on hover */
         }
     </style>
-    {% endblock %}
 </head>
 <body>
-    <header class="bg-primary text-white p-3">
+    <header class="py-3 shadow" style="background-color: #9a54d4; color: #ffffff;">
         <div class="container">
-            <!-- ========== HEADER ========== -->
-            <nav class="mt-4 relative max-w-2xl w-full bg-white border border-gray-200 rounded-full mx-2 py-2.5 md:flex md:items-center md:justify-between md:py-0 md:px-4 md:mx-auto dark:bg-neutral-900 dark:border-neutral-700">
-                <div class="px-4 md:px-0 flex justify-between items-center">
-                    <div class="flex items-center">
-                        <!-- Logo -->
-                        <a class="flex-none rounded-md text-xl inline-block font-semibold focus:outline-hidden focus:opacity-80" href="/" aria-label="ShiQL Gen">
-                            <img src="/static/4.png" alt="ShiQL-Gen Logo" class="header-logo">
-                        </a>
-                        <!-- End Logo -->
-                        <div class="ms-1 sm:ms-2">
-                        </div>
-                    </div>
-                    <div class="md:hidden">
-                        <!-- Toggle Button -->
-                        <button type="button" class="hs-collapse-toggle flex justify-center items-center size-7 border border-gray-200 text-gray-500 rounded-full hover:bg-gray-200 focus:outline-hidden focus:bg-gray-200 dark:border-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" id="hs-navbar-header-floating-collapse" aria-expanded="false" aria-controls="hs-navbar-header-floating" aria-label="Toggle navigation" data-hs-collapse="#hs-navbar-header-floating">
-                            <svg class="hs-collapse-open:hidden shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
-                            <svg class="hs-collapse-open:block hidden shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-                        </button>
-                        <!-- End Toggle Button -->
-                    </div>
-                </div>
-                <div id="hs-navbar-header-floating" class="hidden hs-collapse overflow-hidden transition-all duration-300 basis-full grow md:block" aria-labelledby="hs-navbar-header-floating-collapse">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-end gap-2 md:gap-3 mt-3 md:mt-0 py-2 md:py-0 md:ps-7">
-                        <!-- Removed Work -->
-                        <a class="py-0.5 md:py-3 px-4 md:px-1 border-s-2 md:border-s-0 md:border-b-2 border-transparent text-gray-500 hover:text-gray-800 focus:outline-hidden dark:text-neutral-400 dark:hover:text-neutral-200" href="/login">Login</a>
-                        <a class="py-0.5 md:py-3 px-4 md:px-1 border-s-2 md:border-s-0 md:border-b-2 border-transparent text-gray-500 hover:text-gray-800 focus:outline-hidden dark:text-neutral-400 dark:hover:text-neutral-200" href="/register">Register</a>
-                    </div>
+            <nav class="navbar navbar-expand-md navbar-dark">
+                <a class="navbar-brand d-flex align-items-center" href="/" style="transition: transform 0.3s;">
+                    <img src="/static/4.png" alt="ShiQL-Gen Logo" class="header-logo mr-2 animate__animated animate__fadeInLeft">
+                    
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/about">About Us</a>
+                        </li>
+                        <!-- Removed Generate Query link -->
+                    </ul>
                 </div>
             </nav>
-            <!-- ========== END HEADER ========== -->
         </div>
     </header>
-    <main class="container my-4">
+
+    <main class="container my-5 animate__animated animate__fadeInUp">
         {% block content %}{% endblock %}
     </main>
-    <footer class="mt-auto w-full max-w py-10 px-4 sm:px-6 lg:px-8 mx-auto">
-        <div class="d-flex flex-column gap-4">
-            <div class="d-flex gap-4">
-                <!-- Product Links -->
-                <div>
-                    <h4 class="text-xs font-semibold text-gray-900 uppercase dark:text-neutral-100">Product</h4>
-                    <div class="mt-3 text-sm">
-                        <div><a href="#">Pricing</a></div>
-                        <div><a href="#">Changelog</a></div>
-                        <div><a href="#">Docs</a></div>
-                        <div><a href="#">Download</a></div>
-                    </div>
+
+    <footer class="footer bg-dark text-light pt-5 pb-3 mt-auto">
+        <div class="container">
+            <div class="row text-center text-md-left">
+                <div class="col-md-3 mb-4">
+                    <h5 class="text-uppercase">Product</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Changelog</a></li>
+                        <li><a href="#">Docs</a></li>
+                        <li><a href="#">Download</a></li>
+                    </ul>
                 </div>
-                <!-- Company Links -->
-                <div>
-                    <h4 class="text-xs font-semibold text-gray-900 uppercase dark:text-neutral-100">Company</h4>
-                    <div class="mt-3 text-sm">
-                        <div><a href="#">About us</a></div>
-                        <div><a href="#">Blog</a></div>
-                        <div><a href="#">Careers</a></div>
-                        <div><a href="#">Customers</a></div>
-                        <div><a href="#">Newsroom</a></div>
-                        <div><a href="#">Sitemap</a></div>
-                    </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="text-uppercase">Company</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Customers</a></li>
+                        <li><a href="#">Newsroom</a></li>
+                        <li><a href="#">Sitemap</a></li>
+                    </ul>
                 </div>
-                <!-- Resources Links -->
-                <div>
-                    <h4 class="text-xs font-semibold text-gray-900 uppercase dark:text-neutral-100">Resources</h4>
-                    <div class="mt-3 text-sm">
-                        <div><a href="#">Community</a></div>
-                        <div><a href="#">Help & Support</a></div>
-                        <div><a href="#">eBook</a></div>
-                        <div><a href="#">What's New</a></div>
-                        <div><a href="#">Status</a></div>
-                    </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="text-uppercase">Resources</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Help & Support</a></li>
+                        <li><a href="#">eBook</a></li>
+                        <li><a href="#">What's New</a></li>
+                        <li><a href="#">Status</a></li>
+                    </ul>
                 </div>
-                <!-- Developers Links -->
-                <div>
-                    <h4 class="text-xs font-semibold text-gray-900 uppercase dark:text-neutral-100">Developers</h4>
-                    <div class="mt-3 text-sm">
-                        <div><a href="#">Api</a></div>
-                        <div><a href="#">Status</a></div>
-                        <div><a href="#">GitHub</a></div>
-                        <div><a href="#">Financial Services</a></div>
-                        <div><a href="#">Education</a></div>
-                    </div>
-                </div>
-                <!-- Terms, Privacy, and Status Links -->
-                <div>
-                    <h4 class="text-xs font-semibold text-gray-900 uppercase dark:text-neutral-100">Legal</h4>
-                    <div class="mt-3 text-sm">
-                        <div><a href="#">Terms</a></div>
-                        <div><a href="#">Privacy</a></div>
-                        <div><a href="#">Status</a></div>
-                    </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="text-uppercase">Legal</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Terms</a></li>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Status</a></li>
+                    </ul>
                 </div>
             </div>
-            <!-- Brand Section -->
-            <div class="text-center">
-                <a class="font-semibold text-xl text-black dark:text-white" href="#" aria-label="Brand">© 2025 SHiqlGen</a>
-                <p class="mt-3 text-xs sm:text-sm text-gray-600 dark:text-neutral-400">
-                    © 2025 SHiqlGen
-                </p>
+            <div class="text-center mt-4">
+                <p class="mb-0">© 2025 SHiQL Gen. All rights reserved.</p>
             </div>
         </div>
     </footer>
-    <!-- ========== END FOOTER ========== -->
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

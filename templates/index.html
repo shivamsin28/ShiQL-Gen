@@ -1,75 +1,62 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <div class="d-flex flex-column align-items-center">
-        <div class="hero text-center">
-            <h1 class="site-title">ShiQL-Gen</h1>
-            <p>Your ultimate tool for generating SQL queries effortlessly.</p>
-            <a href="#features" class="btn btn-primary">Learn More</a>
-        </div>
-        <div id="features" class="features text-center mt-4">
-            <h2>Features</h2>
-            <ul class="list-unstyled">
-                <li>Generate SQL queries with ease</li>
-                <li>Customizable templates</li>
-                <li>Seamless integration</li>
-            </ul>
-        </div>
-        <!-- Testimonials Section -->
-        <div id="testimonials" class="testimonials text-center mt-5">
-            <h2>What Our Users Say</h2>
-            <div class="mt-4">
-                <blockquote class="blockquote">
-                    <p>"ShiQL-Gen has revolutionized the way we handle SQL queries. It's a game-changer!"</p>
-                    <footer class="blockquote-footer">John Doe, Software Engineer</footer>
-                </blockquote>
-                <blockquote class="blockquote mt-4">
-                    <p>"The customizable templates save us so much time. Highly recommended!"</p>
-                    <footer class="blockquote-footer">Jane Smith, Data Analyst</footer>
-                </blockquote>
+<div class="container my-5">
+    <div class="text-center">
+        <h1>Welcome to ShiQL-Gen</h1>
+        <p class="mt-3">Your ultimate tool for generating SQL queries effortlessly. We simplify your database interactions, so you can focus on building amazing things.</p>
+    </div>
+    <div class="mt-5">
+        <h2>Why Choose Us?</h2>
+        <p>ShiQL-Gen is designed to make your life easier by providing:</p>
+        <ul class="mt-3">
+            <li>Efficient query generation</li>
+            <li>Support for multiple databases</li>
+            <li>Intuitive and user-friendly interface</li>
+        </ul>
+    </div>
+    <div class="text-center mt-5">
+        <a href="/generate_query" class="btn btn-primary">Generate Query</a>
+    </div>
+    <div class="mt-5">
+        <h2>Contact Us</h2>
+        <p>Have questions or need support? Reach out to us!</p>
+        <form class="mt-4">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Your Name" required>
             </div>
-        </div>
-        <!-- Contact Us Section -->
-        <div id="contact" class="contact text-center mt-5">
-            <h2>Contact Us</h2>
-            <p>Have questions or need support? Reach out to us!</p>
-            <form class="mt-4">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Your Name" required>
-                </div>
-                <div class="form-group mt-3">
-                    <input type="email" class="form-control" placeholder="Your Email" required>
-                </div>
-                <div class="form-group mt-3">
-                    <textarea class="form-control" rows="4" placeholder="Your Message" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary mt-3">Send Message</button>
-            </form>
-        </div>
+            <div class="form-group mt-3">
+                <input type="email" class="form-control" placeholder="Your Email" required>
+            </div>
+            <div class="form-group mt-3">
+                <textarea class="form-control" rows="4" placeholder="Your Message" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Send Message</button>
+        </form>
     </div>
 </div>
 {% endblock %}
 
 {% block css %}
 <style>
-    .hero {
-        padding: 70px 30px;
-        background-color: #f8f9fa;
+    body {
+        background-color: #121212; /* Dark background */
+        color: #e0e0e0; /* Light text color */
     }
-    .hero .site-title {
-        font-size: 3rem;
-        font-weight: bold;
-        margin-bottom: 30px;
-        color: #333;
+    h1, h2 {
+        color: #bb86fc; /* Light purple for headings */
     }
-    .hero p {
-        font-size: 1.5rem;
-        margin-bottom: 40px;
+    a {
+        color: #bb86fc; /* Light purple for links */
+        transition: color 0.3s;
+    }
+    a:hover {
+        color: #9a67ea; /* Slightly darker purple on hover */
     }
     .btn-primary {
-        background-color: #660666;
-        color: white;
+        background-color: #bb86fc; /* Light purple for buttons */
+        color: #121212; /* Dark text color */
+        border: none;
         padding: 15px 30px;
         text-decoration: none;
         border-radius: 5px;
@@ -77,50 +64,12 @@
         transition: background-color 0.3s ease, transform 0.2s ease;
     }
     .btn-primary:hover {
-        background-color: #550055;
+        background-color: #9a67ea; /* Slightly darker purple on hover */
         transform: scale(1.05);
     }
-    .features {
-        margin-top: 70px;
-    }
-    .features h2 {
-        font-size: 2rem;
-        margin-bottom: 30px;
-    }
-    .features ul {
-        padding: 0;
-    }
-    .features li {
-        font-size: 1.2rem;
-        margin: 15px 0;
-    }
-    .testimonials {
-        margin-top: 70px;
-    }
-    .testimonials h2 {
-        font-size: 2rem;
-        margin-bottom: 30px;
-    }
-    .blockquote {
-        font-size: 1.2rem;
-        color: #555;
-    }
-    .blockquote-footer {
-        font-size: 1rem;
-        color: #777;
-    }
-    .contact {
-        margin-top: 70px;
-    }
-    .contact h2 {
-        font-size: 2rem;
-        margin-bottom: 20px;
-    }
-    .contact form .form-control {
-        font-size: 1rem;
-    }
-    .contact form button {
-        font-size: 1.2rem;
+    ul {
+        list-style-type: disc;
+        margin-left: 20px;
     }
 </style>
 {% endblock %}

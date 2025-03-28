@@ -83,5 +83,16 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html')
 
+@app.route('/generate_query', methods=['GET', 'POST'])
+def generate_query():
+    if request.method == 'POST':
+        # Handle query generation logic here
+        table_name = request.form.get('table-name')
+        columns = request.form.get('columns')
+        conditions = request.form.get('conditions')
+        # Generate SQL query based on inputs
+        pass
+    return render_template('generate_query.html')
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)

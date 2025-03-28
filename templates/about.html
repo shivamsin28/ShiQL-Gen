@@ -1,11 +1,55 @@
 {% extends 'base.html' %}
 
 {% block content %}
-   <div class="container">
-    about page
-   </div>
+<div class="container my-5">
+    <div class="text-center">
+        <h1>About Us</h1>
+        <p class="mt-3">Hi there! We're Shiql Gen, a friendly little platform born in 2025 from a group of final-year students who really wanted to make SQL less of a headache. Ever spent hours debugging queries or juggling between tools? Yeah, us too. That’s why we built this—to help you work smarter, not harder.</p> 
+        <p class="mt-3"><b>Here’s what we do to make your life easier:</b></p>
+        <p class="mt-3"><b>Write Queries for You –</b> Describe what you need like you’re talking to a coworker, and we’ll turn it into clean, efficient SQL.</p> 
+        <p class="mt-3"><b>No More Database Chaos –</b> Connect to your existing databases, spin up new ones, or import data—all in one place. No more tab overload!</p> 
+        <p class="mt-3"><b>Tables That Build Themselves –</b> Need a table? Tell us what it should do, and we’ll design it for you. Less time wrestling with schemas, more time getting things done.</p>
+      </div>
+    </div>
+    <div class="mt-5">
+        <h2>Our Mission</h2>
+        <p>We believe working with databases should be:</p>
+
+        <p> Simple – No more memorizing syntax or digging through documentation</p>
+         
+         <p>Efficient – Less time debugging, more time building</p>.
+         
+         <p>Accessible – Powerful tools that work for beginners and experts alike</p>
+         <p>Shiql Gen is our answer – an AI assistant that handles the technical heavy lifting so you can focus on what matters. We're not just building another query tool; we're rethinking how people interact with databases entirely.
+         
+         Still a small team, still passionate, still eating too much pizza while we work on making Shiql Gen better every day. Come build with us.</p>
+    </div>
+    <div class="mt-5">
+        <h2>Our Team</h2>
+        <p>We are a team of passionate developers and data enthusiasts committed to delivering the best solutions for your SQL needs.</p>
+    </div>
+    <div class="mt-5">
+        <h2>Contact Us</h2>
+        <p>If you have any questions or feedback, feel free to <a href="#contact">reach out to us</a>.</p>
+    </div>
+</div>
 {% endblock %}
 
 {% block css %}
-    
+<style>
+    body {
+        background-color: #121212; /* Dark background */
+        color: #e0e0e0; /* Light text color */
+    }
+    h1, h2 {
+        color: #bb86fc; /* Light purple for headings */
+    }
+    a {
+        color: #bb86fc; /* Light purple for links */
+        transition: color 0.3s;
+    }
+    a:hover {
+        color: #9a67ea; /* Slightly darker purple on hover */
+    }
+</style>
 {% endblock %}
