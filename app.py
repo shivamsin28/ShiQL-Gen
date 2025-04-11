@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import bcrypt
+from utils.sql_query_generator import SQLQueryGenerator
 
 
 app = Flask(__name__)
@@ -85,14 +86,17 @@ def register():
 
 @app.route('/generate_query', methods=['GET', 'POST'])
 def generate_query():
+    query = None
     if request.method == 'POST':
-        # Handle query generation logic here
         table_name = request.form.get('table-name')
-        columns = request.form.get('columns')
-        conditions = request.form.get('conditions')
-        # Generate SQL query based on inputs
-        pass
-    return render_template('generate_query.html')
+        columns = request.form.get('columns').split(',')
+        conditions = request.form.get('conditions').split(',') if request.form.get('conditions') else None
+
+        # Use SQLQueryGenerator to generate the query
+        query_generator = SQLQueryGenerator()
+        query = query_generator.select(table=table_name, columns=columns, conditions=conditions)
+
+    return render_template('generate_query.html', query=query)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
