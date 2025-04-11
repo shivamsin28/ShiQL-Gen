@@ -5,6 +5,9 @@
     <div class="text-center">
         <h1>Welcome to ShiQL-Gen</h1>
         <p class="mt-3">Your ultimate tool for generating SQL queries effortlessly. We simplify your database interactions, so you can focus on building amazing things.</p>
+        {% if session.get('user') %}
+        <a href="/dashboard" class="btn btn-primary mt-4">Go to Dashboard</a>
+        {% endif %}
     </div>
     <div class="mt-5">
         <h2>Why Choose Us?</h2>
@@ -14,6 +17,26 @@
             <li>Support for multiple databases</li>
             <li>Intuitive and user-friendly interface</li>
         </ul>
+    </div>
+    <div class="mt-5">
+        <h2>Features</h2>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <img src="/static/icons/feature1.png" alt="Feature 1" class="img-fluid mb-3">
+                <h3>Custom Query Builder</h3>
+                <p>Build complex SQL queries with ease using our intuitive query builder.</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <img src="/static/icons/feature2.png" alt="Feature 2" class="img-fluid mb-3">
+                <h3>Database Integration</h3>
+                <p>Seamlessly connect to your databases and manage them effortlessly.</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <img src="/static/icons/feature3.png" alt="Feature 3" class="img-fluid mb-3">
+                <h3>AI-Powered Suggestions</h3>
+                <p>Get intelligent suggestions to optimize your queries and database design.</p>
+            </div>
+        </div>
     </div>
     <div class="text-center mt-5">
         <a href="/generate_query" class="btn btn-primary">Generate Query</a>
