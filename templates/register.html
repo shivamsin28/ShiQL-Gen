@@ -3,30 +3,59 @@
 {% block content %}
 <div class="container my-5">
     <div class="text-center">
-        <h1>Register</h1>
-        <p class="mt-3">Join ShiQL-Gen today and simplify your SQL query generation!</p>
+        <div class="page-title">
+            <h1>Register</h1>
+            <div class="title-glow"></div>
+        </div>
+        <p class="subtitle">Join ShiQL-Gen today and simplify your SQL query generation!</p>
     </div>
     <div class="mt-5 d-flex justify-content-center">
-        <form class="w-50" method="POST">
+        <form class="auth-form" method="POST">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-circle"></i>
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
             <div class="form-group">
-                <label for="name">Full Name</label>
+                <label for="name">
+                    <i class="fas fa-user"></i>
+                    Full Name
+                </label>
                 <input type="text" class="form-control" id="name" placeholder="Enter your full name" required name="name">
             </div>
             <div class="form-group mt-3">
-                <label for="email">Email Address</label>
+                <label for="email">
+                    <i class="fas fa-envelope"></i>
+                    Email Address
+                </label>
                 <input type="email" class="form-control" id="email" placeholder="Enter your email" required name="email">
             </div>
             <div class="form-group mt-3">
-                <label for="username">Username</label>
+                <label for="username">
+                    <i class="fas fa-at"></i>
+                    Username
+                </label>
                 <input type="text" class="form-control" id="username" placeholder="Enter your username" required name="username">
             </div>
             <div class="form-group mt-3">
-                <label for="password">Password</label>
+                <label for="password">
+                    <i class="fas fa-lock"></i>
+                    Password
+                </label>
                 <input type="password" class="form-control" id="password" placeholder="Create a password" required name="password">
             </div>
-            <button type="submit" class="btn btn-primary btn-block mt-4">Register</button>
-            <p class="mt-3 text-center">
-                Already have an account? <a href="/login">Login here</a>.
+            <button type="submit" class="btn btn-primary btn-block mt-4">
+                <i class="fas fa-user-plus"></i>
+                Register
+            </button>
+            <p class="mt-3 text-center auth-link">
+                Already have an account? <a href="{{ url_for('login') }}" class="glow-link">Login here</a>
             </p>
         </form>
     </div>
@@ -35,45 +64,156 @@
 
 {% block css %}
 <style>
-    body {
-        background-color: #121212; /* Dark background */
-        color: #e0e0e0; /* Light text color */
+    :root {
+        --primary: #00f2fe;
+        --secondary: #4facfe;
+        --dark: #0a0a0a;
+        --darker: #050505;
+        --light: #ffffff;
+        --accent: #00f2fe;
     }
+
+    .page-title {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 2rem;
+    }
+
+    .title-glow {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle, rgba(0, 242, 254, 0.2) 0%, transparent 70%);
+        border-radius: 50%;
+        z-index: -1;
+        animation: pulse 2s ease-out infinite;
+    }
+
     h1 {
-        color: #bb86fc; /* Light purple for headings */
+        background: linear-gradient(45deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-weight: 700;
+        font-size: 3.5rem;
     }
-    a {
-        color: #bb86fc; /* Light purple for links */
-        transition: color 0.3s;
-    }
-    a:hover {
-        color: #9a67ea; /* Slightly darker purple on hover */
-    }
-    .form-control {
-        background-color: #1e1e1e; /* Dark background for input fields */
-        color: #e0e0e0; /* Light text color */
-        border: 1px solid #333;
-        border-radius: 6px;
-        padding: 10px;
-        transition: border 0.3s;
-    }
-    .form-control:focus {
-        border-color: #bb86fc;
-        box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.2);
-        background-color: #2a2a2a;
-    }
-    .btn-primary {
-        background-color: #bb86fc; /* Light purple for buttons */
-        color: #121212; /* Dark text color */
-        border: none;
-        padding: 10px 20px;
-        border-radius: 6px;
+
+    .subtitle {
+        color: rgba(255, 255, 255, 0.8);
         font-size: 1.2rem;
-        transition: background-color 0.3s ease, transform 0.2s ease;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
     }
+
+    .auth-form {
+        width: 75%;
+        max-width: 500px;
+        background: rgba(10, 10, 10, 0.8);
+        padding: 2rem;
+        border-radius: 16px;
+        border: 1px solid rgba(0, 242, 254, 0.1);
+        backdrop-filter: blur(10px);
+    }
+
+    .form-group label {
+        color: var(--primary);
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .form-group label i {
+        font-size: 1.1rem;
+    }
+
+    .form-control {
+        background-color: rgba(5, 5, 5, 0.8);
+        border: 1px solid rgba(0, 242, 254, 0.2);
+        color: var(--light);
+        border-radius: 8px;
+        padding: 0.8rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        background-color: rgba(5, 5, 5, 0.9);
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.1);
+        color: var(--light);
+    }
+
+    .form-control::placeholder {
+        color: #666;
+    }
+
+    .btn-primary {
+        background: linear-gradient(45deg, var(--primary), var(--secondary));
+        border: none;
+        color: var(--dark);
+        font-weight: 600;
+        padding: 0.8rem 2rem;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+
     .btn-primary:hover {
-        background-color: #9a67ea; /* Slightly darker purple on hover */
-        transform: scale(1.02);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 242, 254, 0.3);
+    }
+
+    .auth-link {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1rem;
+    }
+
+    .glow-link {
+        color: var(--primary);
+        text-decoration: none;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .glow-link:hover {
+        color: var(--secondary);
+        text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0.5;
+        }
+        100% {
+            transform: translate(-50%, -50%) scale(1.5);
+            opacity: 0;
+        }
+    }
+
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        .auth-form {
+            width: 95%;
+            padding: 1.5rem;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            padding: 0 1rem;
+        }
     }
 </style>
 {% endblock %}

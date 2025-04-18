@@ -48,21 +48,32 @@ def about():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['email']
+        username = request.form['username']
         password = request.form['password']
-        user = User.query.filter_by(username=username).first() or User.query.filter_by(email=username).first()
+        user = User.query.filter_by(username=username).first()
         if user:
             if user.check_password(password):
                 session['user'] = user.username
                 return redirect(url_for('dashboard'))
             else:
                 flash('Invalid username or password')
-        flash('Invalid username or password')
+        else:
+            flash('Invalid username or password')
     return render_template('login.html')
 
 @app.route("/dashboard")
 def dashboard():
-    return render_template("dashboard.html")
+    if 'user' not in session:
+        flash('Please login to access the dashboard')
+        return redirect(url_for('login'))
+    return render_template("dashboard.html", username=session['user'])
+
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    flash('You have been logged out successfully')
+    return redirect(url_for('login'))
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -86,6 +97,10 @@ def register():
 
 @app.route('/generate_query', methods=['GET', 'POST'])
 def generate_query():
+    if 'user' not in session:
+        flash('Please login to generate queries')
+        return redirect(url_for('login'))
+        
     query = None
     if request.method == 'POST':
         table_name = request.form.get('table-name')
