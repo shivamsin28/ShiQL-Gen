@@ -1,0 +1,243 @@
+2025-04-19 01:45:11,733 - INFO - 127.0.0.1 - - [19/Apr/2025 01:45:11] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-04-19 01:45:11,756 - INFO - 127.0.0.1 - - [19/Apr/2025 01:45:11] "GET /login HTTP/1.1" 200 -
+2025-04-19 01:45:11,797 - INFO - 127.0.0.1 - - [19/Apr/2025 01:45:11] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:45:20,035 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivAWIFEY', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:45:20,038 - INFO - 127.0.0.1 - - [19/Apr/2025 01:45:20] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:45:20,051 - INFO - 127.0.0.1 - - [19/Apr/2025 01:45:20] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:46:00,434 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivAWIFEY', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:46:00,438 - INFO - 127.0.0.1 - - [19/Apr/2025 01:46:00] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:46:00,450 - INFO - 127.0.0.1 - - [19/Apr/2025 01:46:00] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:46:01,447 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivamsin070903@gmail.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:46:01,449 - INFO - 127.0.0.1 - - [19/Apr/2025 01:46:01] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:46:01,464 - INFO - 127.0.0.1 - - [19/Apr/2025 01:46:01] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:46:01,678 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivamsin070903@gmail.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:46:01,681 - INFO - 127.0.0.1 - - [19/Apr/2025 01:46:01] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:46:01,700 - INFO - 127.0.0.1 - - [19/Apr/2025 01:46:01] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:46:02,168 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivamsin070903@gmail.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:46:02,171 - INFO - 127.0.0.1 - - [19/Apr/2025 01:46:02] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:46:02,182 - INFO - 127.0.0.1 - - [19/Apr/2025 01:46:02] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:46:02,333 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivamsin070903@gmail.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:46:02,336 - INFO - 127.0.0.1 - - [19/Apr/2025 01:46:02] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:46:02,354 - INFO - 127.0.0.1 - - [19/Apr/2025 01:46:02] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:46:02,569 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivamsin070903@gmail.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:46:02,572 - INFO - 127.0.0.1 - - [19/Apr/2025 01:46:02] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:46:02,585 - INFO - 127.0.0.1 - - [19/Apr/2025 01:46:02] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:46:08,924 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivAWIFEY', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:46:08,925 - INFO - 127.0.0.1 - - [19/Apr/2025 01:46:08] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:46:08,950 - INFO - 127.0.0.1 - - [19/Apr/2025 01:46:08] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:47:23,800 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivAWIFEY', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:47:23,801 - INFO - 127.0.0.1 - - [19/Apr/2025 01:47:23] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:47:23,818 - INFO - 127.0.0.1 - - [19/Apr/2025 01:47:23] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:47:24,694 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivamsin070903@gmail.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:47:24,696 - INFO - 127.0.0.1 - - [19/Apr/2025 01:47:24] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:47:24,708 - INFO - 127.0.0.1 - - [19/Apr/2025 01:47:24] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:48:14,538 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivAWIFEY', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:48:14,541 - INFO - 127.0.0.1 - - [19/Apr/2025 01:48:14] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:48:14,553 - INFO - 127.0.0.1 - - [19/Apr/2025 01:48:14] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:48:15,810 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivamsin070903@gmail.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:48:15,812 - INFO - 127.0.0.1 - - [19/Apr/2025 01:48:15] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:48:15,827 - INFO - 127.0.0.1 - - [19/Apr/2025 01:48:15] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:49:53,837 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivamsin070903@gmail.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:49:53,840 - INFO - 127.0.0.1 - - [19/Apr/2025 01:49:53] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:49:53,855 - INFO - 127.0.0.1 - - [19/Apr/2025 01:49:53] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:50:00,080 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivAWIFEY', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:50:00,082 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:00] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:50:00,103 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:00] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:50:01,094 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivamsin070903@gmail.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:50:01,098 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:01] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:50:01,118 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:01] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:50:01,502 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivamsin070903@gmail.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:50:01,504 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:01] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:50:01,517 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:01] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:50:01,830 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivamsin070903@gmail.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:50:01,832 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:01] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:50:01,844 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:01] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:50:01,983 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivamsin070903@gmail.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:50:01,985 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:01] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:50:01,998 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:01] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:50:02,153 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivamsin070903@gmail.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:50:02,155 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:02] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:50:02,168 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:02] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:50:02,332 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivamsin070903@gmail.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:50:02,334 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:02] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:50:02,347 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:02] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:50:02,499 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivamsin070903@gmail.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:50:02,501 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:02] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:50:02,516 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:02] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:50:02,667 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivamsin070903@gmail.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:50:02,668 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:02] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:50:02,683 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:02] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:50:05,367 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:05] "GET / HTTP/1.1" 200 -
+2025-04-19 01:50:05,379 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:05] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:50:12,852 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:12] "[32mGET /generate_query HTTP/1.1[0m" 302 -
+2025-04-19 01:50:12,864 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:12] "GET /login HTTP/1.1" 200 -
+2025-04-19 01:50:12,879 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:12] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:50:16,602 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivamsin070903@gmail.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:50:16,603 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:16] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:50:16,621 - INFO - 127.0.0.1 - - [19/Apr/2025 01:50:16] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:51:38,327 - INFO - 127.0.0.1 - - [19/Apr/2025 01:51:38] "GET / HTTP/1.1" 200 -
+2025-04-19 01:51:38,380 - INFO - 127.0.0.1 - - [19/Apr/2025 01:51:38] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:51:40,886 - INFO - 127.0.0.1 - - [19/Apr/2025 01:51:40] "GET /login HTTP/1.1" 200 -
+2025-04-19 01:51:40,913 - INFO - 127.0.0.1 - - [19/Apr/2025 01:51:40] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:51:46,087 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivAWIFEY', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:51:46,089 - INFO - 127.0.0.1 - - [19/Apr/2025 01:51:46] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:51:46,104 - INFO - 127.0.0.1 - - [19/Apr/2025 01:51:46] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:53:09,671 - ERROR - Login error: (sqlite3.OperationalError) no such column: user.created_at
+[SQL: SELECT user.id AS user_id, user.name AS user_name, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.created_at AS user_created_at, user.last_login AS user_last_login 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('shivAWIFEY', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-19 01:53:09,683 - INFO - 127.0.0.1 - - [19/Apr/2025 01:53:09] "POST /login HTTP/1.1" 200 -
+2025-04-19 01:53:09,714 - INFO - 127.0.0.1 - - [19/Apr/2025 01:53:09] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:53:11,400 - INFO - 127.0.0.1 - - [19/Apr/2025 01:53:11] "GET / HTTP/1.1" 200 -
+2025-04-19 01:53:11,422 - INFO - 127.0.0.1 - - [19/Apr/2025 01:53:11] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:53:12,542 - INFO - 127.0.0.1 - - [19/Apr/2025 01:53:12] "GET / HTTP/1.1" 200 -
+2025-04-19 01:53:12,566 - INFO - 127.0.0.1 - - [19/Apr/2025 01:53:12] "[36mGET /static/4.png HTTP/1.1[0m" 304 -
+2025-04-19 01:53:13,699 - INFO - 127.0.0.1 - - [19/Apr/2025 01:53:13] "GET / HTTP/1.1" 200 -
+2025-04-19 01:53:13,722 - INFO - 127.0.0.1 - - [19/Apr/2025 01:53:13] "[36mGET /static/4.png HTTP/1.1[0m" 304 -

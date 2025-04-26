@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SQL Query Generator - App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <nav class="app-nav">
+        <div class="nav-content">
+            <a href="/" class="logo">
+                <i class="fas fa-database"></i>
+                SQL Query Generator
+            </a>
+            <div class="nav-links">
+                <span class="welcome-text">
+                    <i class="fas fa-user"></i>
+                    Welcome, {{ session.get('username') }}
+                </span>
+                <a href="{{ url_for('logout') }}" class="nav-link">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>
+            <i class="fas fa-database"></i> 
+            SQL Query Generator
+            <div class="subtitle">Generate SQL queries using natural language</div>
+        </h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} animate-slide-in">
+                        <i class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-circle' }}"></i>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Database Setup Section -->
+        <div class="section animate-fade-in">
+            <div class="section-header">
+                <h2><i class="fas fa-server"></i> Database Setup</h2>
+                <div class="section-description">Configure your database connection</div>
+            </div>
+            <form method="POST" action="{{ url_for('connect_database') }}" id="dbForm" class="animated-form">
+                <div class="form-control">
+                    <label for="db_type">
+                        <i class="fas fa-database"></i> Database Type
+                    </label>
+                    <select name="db_type" id="db_type" class="fancy-select">
+                        <option value="sqlite">SQLite</option>
+                        <option value="mysql">MySQL</option>
+                        <option value="postgresql">PostgreSQL</option>
+                    </select>
+                </div>
+                
+                <div id="sqlite-fields" class="animate-fade-in">
+                    <div class="form-control">
+                        <label for="database">
+                            <i class="fas fa-file-alt"></i> Database Path
+                        </label>
+                        <input type="text" name="database" id="database" value="database.db">
+                    </div>
+                </div>
+                
+                <div id="other-fields" class="form-grid animate-fade-in" style="display:none;">
+                    <div class="form-control">
+                        <label for="host">
+                            <i class="fas fa-network-wired"></i> Host
+                        </label>
+                        <input type="text" name="host" id="host" value="localhost">
+                    </div>
+                    <div class="form-control">
+                        <label for="username">
+                            <i class="fas fa-user"></i> Username
+                        </label>
+                        <input type="text" name="username" id="username">
+                    </div>
+                    <div class="form-control">
+                        <label for="password">
+                            <i class="fas fa-key"></i> Password
+                        </label>
+                        <div class="password-input">
+                            <input type="password" name="password" id="password">
+                            <button type="button" class="toggle-password" tabindex="-1">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-control">
+                        <label for="database_name">
+                            <i class="fas fa-database"></i> Database Name
+                        </label>
+                        <input type="text" name="database_name" id="database_name">
+                    </div>
+                </div>
+                
+                <button type="submit" id="connectBtn" class="primary-button">
+                    <i class="fas fa-plug"></i> Create/Connect Database
+                    <span class="loading" style="display: none;"></span>
+                </button>
+            </form>
+        </div>
+
+        {% if session.get('db_connected') %}
+        <!-- Table Setup Section -->
+        <div class="section animate-fade-in">
+            <div class="section-header">
+                <h2><i class="fas fa-table"></i> Table Setup</h2>
+                <div class="section-description">Create a new table in your database</div>
+            </div>
+            <form method="POST" action="{{ url_for('create_table') }}" id="tableForm" class="animated-form">
+                <div class="form-control">
+                    <label for="table_name">
+                        <i class="fas fa-table"></i> Table Name
+                    </label>
+                    <input type="text" name="table_name" id="table_name" placeholder="Enter table name" required>
+                </div>
+                <div class="form-control">
+                    <label for="table_schema">
+                        <i class="fas fa-code"></i> Table Schema
+                    </label>
+                    <div class="code-editor">
+                        <textarea name="table_schema" id="table_schema" 
+                            placeholder="id INTEGER PRIMARY KEY,&#10;name TEXT NOT NULL,&#10;description TEXT,&#10;created_at DATETIME" 
+                            rows="4" required></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="primary-button">
+                    <i class="fas fa-plus-circle"></i> Create Table
+                    <span class="loading" style="display: none;"></span>
+                </button>
+            </form>
+        </div>
+        {% endif %}
+
+        {% if session.get('table_created') %}
+        <!-- Data Insertion Section -->
+        <div class="section animate-fade-in">
+            <div class="section-header">
+                <h2><i class="fas fa-plus"></i> Data Insertion</h2>
+                <div class="section-description">Insert data using natural language</div>
+            </div>
+            <form method="POST" action="{{ url_for('insert_data') }}" id="insertForm" class="animated-form">
+                <div class="form-control">
+                    <label for="insert_prompt">
+                        <i class="fas fa-comment-alt"></i> Insert Instructions
+                    </label>
+                    <div class="code-editor">
+                        <textarea name="insert_prompt" id="insert_prompt" 
+                            placeholder="Examples:&#10;1. Insert a record with name 'John Doe' and age 25&#10;2. Add new product: name = 'Widget', price = 19.99&#10;3. Create an entry for employee Jane with department 'IT'" 
+                            rows="4" required></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="primary-button">
+                    <i class="fas fa-save"></i> Insert Data
+                    <span class="loading" style="display: none;"></span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Querying Section -->
+        <div class="section animate-fade-in">
+            <div class="section-header">
+                <h2><i class="fas fa-search"></i> Query Data</h2>
+                <div class="section-description">Query your data using natural language</div>
+            </div>
+            <form method="POST" action="{{ url_for('execute_query') }}" id="queryForm" class="animated-form">
+                <div class="form-control">
+                    <label for="query_prompt">
+                        <i class="fas fa-comment-alt"></i> Query Instructions
+                    </label>
+                    <div class="code-editor">
+                        <textarea name="query_prompt" id="query_prompt" 
+                            placeholder="Examples:&#10;1. Show all records where age is greater than 25&#10;2. Find products with price less than $20&#10;3. List employees in the IT department" 
+                            rows="4" required></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="primary-button">
+                    <i class="fas fa-play"></i> Generate and Execute Query
+                    <span class="loading" style="display: none;"></span>
+                </button>
+            </form>
+            
+            {% if session.get('generated_sql') %}
+            <div class="result-section animate-fade-in">
+                <h3><i class="fas fa-code"></i> Generated SQL</h3>
+                <pre class="sql-code">{{ session.get('generated_sql') }}</pre>
+            </div>
+            {% endif %}
+
+            {% if session.get('query_result') %}
+            <div class="result-section animate-fade-in">
+                <h3><i class="fas fa-table"></i> Query Result</h3>
+                <div class="table-container">
+                    {{ session.get('query_result')|safe }}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Database type toggle
+        document.getElementById('db_type').addEventListener('change', function() {
+            const sqliteFields = document.getElementById('sqlite-fields');
+            const otherFields = document.getElementById('other-fields');
+            if (this.value === 'sqlite') {
+                sqliteFields.style.display = 'block';
+                otherFields.style.display = 'none';
+            } else {
+                sqliteFields.style.display = 'none';
+                otherFields.style.display = 'grid';
+            }
+        });
+
+        // Password visibility toggle
+        document.querySelectorAll('.toggle-password').forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.previousElementSibling;
+                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                input.setAttribute('type', type);
+                this.querySelector('i').classList.toggle('fa-eye');
+                this.querySelector('i').classList.toggle('fa-eye-slash');
+            });
+        });
+
+        // Form submission handling with loading states
+        const forms = ['dbForm', 'tableForm', 'insertForm', 'queryForm'];
+        forms.forEach(formId => {
+            const form = document.getElementById(formId);
+            if (form) {
+                form.addEventListener('submit', function() {
+                    const btn = this.querySelector('button[type="submit"]');
+                    const loading = btn.querySelector('.loading');
+                    btn.disabled = true;
+                    loading.style.display = 'inline-block';
+                });
+            }
+        });
+
+        // Auto-resize textareas
+        document.querySelectorAll('textarea').forEach(textarea => {
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight + 2) + 'px';
+            });
+        });
+    </script>
+</body>
+</html>
