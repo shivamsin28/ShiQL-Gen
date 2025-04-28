@@ -3,10 +3,43 @@ from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import bcrypt
 from utils.sql_query_generator import SQLQueryGenerator
+import google.generativeai as genai
+import os 
+from dotenv import load_dotenv
+from functools import wraps 
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_session import Session
+import sqlite3
+import re
+import pandas as pd
+from sqlalchemy import create_engine, text
+from instance.create_db import create_and_populate_database
+
+# Initialize Flask app
+app = Flask(__name__) 
+app.secret_key = os.urandom(24) 
+app.config['SESSION_TYPE'] = 'filesystem' 
+Session(app) 
+
+# Load environment variables
+load_dotenv()
+API_KEY = os.getenv("API_KEY")
+
+if not API_KEY: 
+    raise ValueError("Please set the GOOGLE_API_KEY environment variable in your .env file") 
+
+# Configure Gemini AI
+genai.configure(api_key=API_KEY) 
+gen_config = genai.GenerationConfig( 
+    max_output_tokens=2048, 
+    temperature=0.1, 
+    top_p=0.9 
+)
+model = genai.GenerativeModel("gemini-2.0-flash-exp", generation_config=gen_config) 
 
 
-app = Flask(__name__)
-app.secret_key = 'secret'
+
+# Database configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 
 db = SQLAlchemy(app)
@@ -19,13 +52,13 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     
-    def __init__(self, name, username, email, password):
+    def _init_(self, name, username, email, password):
         self.name = name
         self.username = username
         self.email = email
         self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         
-    def __repr__(self):
+    def _repr_(self):
         return '<User %r>' % self.username
     
     def check_password(self, password):
@@ -115,3 +148,9 @@ def generate_query():
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
+
+
+
+
+
+    
