@@ -1,220 +1,943 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
-<div class="container my-5">
-    <div class="text-center">
-        <div class="page-title">
-            <h1>Generate SQL Query</h1>
-            <div class="title-glow"></div>
-        </div>
-        <p class="mt-3 subtitle">Use our AI-powered tool to generate SQL queries effortlessly. Just provide the details below, and we'll handle the rest!</p>
-    </div>
-    <div class="mt-5 d-flex justify-content-center">
-        <form class="query-form" method="POST">
-            <div class="form-group">
-                <label for="table-name">
-                    <i class="fas fa-table"></i>
-                    Table Name
-                </label>
-                <input type="text" class="form-control" id="table-name" name="table-name" placeholder="Enter the table name" required>
-            </div>
-            <div class="form-group mt-3">
-                <label for="columns">
-                    <i class="fas fa-columns"></i>
-                    Columns
-                </label>
-                <textarea class="form-control" id="columns" name="columns" rows="4" placeholder="Enter column names (e.g., id, name, age)" required></textarea>
-            </div>
-            <div class="form-group mt-3">
-                <label for="conditions">
-                    <i class="fas fa-filter"></i>
-                    Conditions (Optional)
-                </label>
-                <textarea class="form-control" id="conditions" name="conditions" rows="3" placeholder="Enter any conditions (e.g., age > 30)"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary btn-block mt-4">
-                <i class="fas fa-magic"></i>
-                Generate Query
-            </button>
-        </form>
-    </div>
-    {% if query %}
-    <div class="mt-5 query-result">
-        <h2>Generated Query</h2>
-        <div class="query-box">
-            <pre>{{ query }}</pre>
-            <div class="query-glow"></div>
-        </div>
-    </div>
-    {% endif %}
-</div>
-{% endblock %}
-
-{% block css %}
-<style>
-    :root {
-        --primary: #00f2fe;
-        --secondary: #4facfe;
-        --dark: #0a0a0a;
-        --darker: #050505;
-        --light: #ffffff;
-        --accent: #00f2fe;
-    }
-
-    .page-title {
-        position: relative;
-        display: inline-block;
-    }
-
-    .title-glow {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle, rgba(0, 242, 254, 0.2) 0%, transparent 70%);
-        border-radius: 50%;
-        z-index: -1;
-        animation: pulse 2s ease-out infinite;
-    }
-
-    h1 {
-        background: linear-gradient(45deg, var(--primary), var(--secondary));
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        font-weight: 700;
-        margin-bottom: 1rem;
-    }
-
-    .subtitle {
-        color: #a0a0a0;
-        font-size: 1.1rem;
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-    .query-form {
-        width: 75%;
-        max-width: 800px;
-        background: rgba(10, 10, 10, 0.5);
-        padding: 2rem;
-        border-radius: 12px;
-        border: 1px solid rgba(0, 242, 254, 0.1);
-        backdrop-filter: blur(10px);
-    }
-
-    .form-group label {
-        color: var(--primary);
-        font-weight: 500;
-        margin-bottom: 0.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .form-group label i {
-        font-size: 1.1rem;
-    }
-
-    .form-control {
-        background-color: rgba(5, 5, 5, 0.8);
-        border: 1px solid rgba(0, 242, 254, 0.2);
-        color: var(--light);
-        border-radius: 8px;
-        padding: 0.8rem 1rem;
-        transition: all 0.3s ease;
-    }
-
-    .form-control:focus {
-        background-color: rgba(5, 5, 5, 0.9);
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.1);
-        color: var(--light);
-    }
-
-    .form-control::placeholder {
-        color: #666;
-    }
-
-    .btn-primary {
-        background: linear-gradient(45deg, var(--primary), var(--secondary));
-        border: none;
-        color: var(--dark);
-        font-weight: 600;
-        padding: 0.8rem 2rem;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        transition: all 0.3s ease;
-    }
-
-    .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0, 242, 254, 0.3);
-    }
-
-    .query-result {
-        text-align: center;
-    }
-
-    .query-result h2 {
-        color: var(--primary);
-        margin-bottom: 1.5rem;
-    }
-
-    .query-box {
-        position: relative;
-        background: rgba(5, 5, 5, 0.8);
-        border: 1px solid rgba(0, 242, 254, 0.2);
-        border-radius: 8px;
-        padding: 1.5rem;
-        overflow: hidden;
-    }
-
-    .query-glow {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at 50% 0%, rgba(0, 242, 254, 0.1) 0%, transparent 70%);
-        pointer-events: none;
-    }
-
-    .query-box pre {
-        color: var(--light);
-        margin: 0;
-        font-family: 'Space Mono', monospace;
-        font-size: 0.9rem;
-        line-height: 1.5;
-        text-align: left;
-    }
-
-    @keyframes pulse {
-        0% {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 0.5;
+<head>
+    <title>SQL Query Generator - App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #7c3aed;
+            --background-color: #f8fafc;
+            --surface-color: #ffffff;
+            --text-color: #1e293b;
+            --border-color: #e2e8f0;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --success-color: #059669;
+            --error-color: #dc2626;
         }
-        100% {
-            transform: translate(-50%, -50%) scale(1.5);
-            opacity: 0;
-        }
-    }
 
-    @media (max-width: 768px) {
-        .query-form {
-            width: 95%;
-            padding: 1.5rem;
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--background-color) 0%, #eef2ff 100%);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--text-color);
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h1 i {
+            margin-right: 0.5rem;
+            background: inherit;
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .section {
+            background: var(--surface-color);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px var(--shadow-color),
+                0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px var(--shadow-color),
+                0 15px 20px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+        }
+
+        .section h2 i {
+            font-size: 1.25rem;
+            color: var(--secondary-color);
+        }
+
+        .section-header {
+            margin-bottom: 2rem;
+        }
+
+        .section-description {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
         }
 
         .subtitle {
             font-size: 1rem;
+            font-weight: normal;
+            color: #64748b;
+            margin-top: 0.5rem;
+        }
+
+        .form-control {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #f8fafc;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            background-color: #ffffff;
+        }
+
+        textarea {
+            min-height: 120px;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .password-input {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-input input {
+            margin-bottom: 0;
+            padding-right: 40px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #64748b;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-password:hover {
+            color: var(--primary-color);
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
+            transition: transform 0.3s ease;
+            transform: translateY(-100%);
+        }
+
+        button:hover::before {
+            transform: translateY(0);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .primary-button {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .alert {
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid;
+            animation: slideIn 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: white;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+
+        .alert i {
+            font-size: 1.25rem;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert-success {
+            background-color: #f0fdf4;
+            border-color: var(--success-color);
+            color: var(--success-color);
+        }
+
+        .alert-error {
+            background-color: #fef2f2;
+            border-color: var(--error-color);
+            color: var(--error-color);
+        }
+
+        .sql-code {
+            background-color: #1e1e2e;
+            color: #cdd6f4;
+            padding: 1.5rem;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            white-space: pre-wrap;
+            margin: 1rem 0;
+            overflow-x: auto;
+            border: 1px solid #313244;
+            position: relative;
+        }
+
+        .sql-code::before {
+            content: 'SQL';
+            position: absolute;
+            top: 0.5rem;
+            right: 1rem;
+            color: #6c7086;
+            font-size: 0.875rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .sql-code .keyword {
+            color: #ff79c6;
+        }
+
+        .sql-code .string {
+            color: #50fa7b;
+        }
+
+        .sql-code .number {
+            color: #bd93f9;
+        }
+
+        .sql-code .operator {
+            color: #ff79c6;
+        }
+
+        .sql-code .comment {
+            color: #6272a4;
+        }
+
+        .code-editor {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .code-editor textarea {
+            background: #f8fafc;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 1rem;
+            margin: 0;
+            border-radius: 12px;
+        }
+
+        .result-section {
+            margin-top: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .result-section h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            background: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--surface-color);
+            font-size: 0.95rem;
+        }
+
+        th,
+        td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: linear-gradient(to right, #f8fafc, #ffffff);
+            font-weight: 600;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        /* Form grid for database connection */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Loading indicator */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+            margin-left: 0.5rem;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem auto;
+            }
+
+            .section {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .section {
+                padding: 1.25rem;
+            }
+
+            .form-control label {
+                font-size: 0.875rem;
+            }
+
+            .section-description {
+                font-size: 0.875rem;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+
+        .fancy-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+            padding-right: 2.5rem;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.3s ease forwards;
+        }
+
+        /* Authentication styles */
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            padding: 2rem;
+        }
+
+        .auth-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .auth-header h2 {
+            color: var(--text-color);
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-header p {
+            color: #64748b;
+        }
+
+        .auth-form .form-control {
+            margin-bottom: 1.5rem;
+        }
+
+        .auth-form .form-control label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-form .form-control label i {
+            color: var(--primary-color);
+        }
+
+        .auth-button {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .auth-links {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #64748b;
+        }
+
+        .auth-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .auth-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* App navigation styles */
+        .app-nav {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 0 1rem;
         }
-    }
-</style>
-{% endblock %}
+
+        .welcome-text {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-color);
+            font-weight: 500;
+            margin-right: 1.5rem;
+        }
+
+        .welcome-text i {
+            color: var(--primary-color);
+        }
+
+        .app-nav .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .app-nav .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .app-nav .nav-link:hover {
+            background: var(--background-color);
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .app-nav .nav-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .app-nav .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .welcome-text {
+                margin-right: 0;
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        /* Password requirements styles */
+        .password-requirements {
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .password-requirements small {
+            color: #64748b;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .password-requirements ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .password-requirements li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #64748b;
+            margin-bottom: 0.25rem;
+        }
+
+        .password-requirements li i {
+            font-size: 0.75rem;
+        }
+
+        .password-requirements li.valid {
+            color: var(--success-color);
+        }
+
+        .password-requirements li.valid i {
+            color: var(--success-color);
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="app-nav">
+        <div class="nav-content">
+            <a href="/" class="logo">
+                <i class="fas fa-database"></i>
+                SQL Query Generator
+            </a>
+            <div class="nav-links">
+                <span class="welcome-text">
+                    <i class="fas fa-user"></i>
+                    Welcome, {{ session.get('username') }}
+                </span>
+                <a href="{{ url_for('logout') }}" class="nav-link">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>
+            <i class="fas fa-database"></i>
+            SQL Query Generator
+            <div class="subtitle">Generate SQL queries using natural language</div>
+        </h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} animate-slide-in">
+            <i class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-circle' }}"></i>
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <!-- Database Setup Section -->
+        <div class="section animate-fade-in">
+            <div class="section-header">
+                <h2><i class="fas fa-server"></i> Database Setup</h2>
+                <div class="section-description">Configure your database connection</div>
+            </div>
+            <form method="POST" action="{{ url_for('connect_database') }}" id="dbForm" class="animated-form">
+                <div class="form-control">
+                    <label for="db_type">
+                        <i class="fas fa-database"></i> Database Type
+                    </label>
+                    <select name="db_type" id="db_type" class="fancy-select">
+                        <option value="sqlite">SQLite</option>
+                        <option value="mysql">MySQL</option>
+                        <option value="postgresql">PostgreSQL</option>
+                    </select>
+                </div>
+
+                <div id="sqlite-fields" class="animate-fade-in">
+                    <div class="form-control">
+                        <label for="database">
+                            <i class="fas fa-file-alt"></i> Database Path
+                        </label>
+                        <input type="text" name="database" id="database" value="database.db">
+                    </div>
+                </div>
+
+                <div id="other-fields" class="form-grid animate-fade-in" style="display:none;">
+                    <div class="form-control">
+                        <label for="host">
+                            <i class="fas fa-network-wired"></i> Host
+                        </label>
+                        <input type="text" name="host" id="host" value="localhost">
+                    </div>
+                    <div class="form-control">
+                        <label for="username">
+                            <i class="fas fa-user"></i> Username
+                        </label>
+                        <input type="text" name="username" id="username">
+                    </div>
+                    <div class="form-control">
+                        <label for="password">
+                            <i class="fas fa-key"></i> Password
+                        </label>
+                        <div class="password-input">
+                            <input type="password" name="password" id="password">
+                            <button type="button" class="toggle-password" tabindex="-1">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-control">
+                        <label for="database_name">
+                            <i class="fas fa-database"></i> Database Name
+                        </label>
+                        <input type="text" name="database_name" id="database_name">
+                    </div>
+                </div>
+
+                <button type="submit" id="connectBtn" class="primary-button">
+                    <i class="fas fa-plug"></i> Create/Connect Database
+                    <span class="loading" style="display: none;"></span>
+                </button>
+            </form>
+        </div>
+
+        {% if session.get('db_connected') %}
+        <!-- Table Setup Section -->
+        <div class="section animate-fade-in">
+            <div class="section-header">
+                <h2><i class="fas fa-table"></i> Table Setup</h2>
+                <div class="section-description">Create a new table in your database</div>
+            </div>
+            <form method="POST" action="{{ url_for('create_table') }}" id="tableForm" class="animated-form">
+                <div class="form-control">
+                    <label for="table_name">
+                        <i class="fas fa-table"></i> Table Name
+                    </label>
+                    <input type="text" name="table_name" id="table_name" placeholder="Enter table name" required>
+                </div>
+                <div class="form-control">
+                    <label for="table_schema">
+                        <i class="fas fa-code"></i> Table Schema
+                    </label>
+                    <div class="code-editor">
+                        <textarea name="table_schema" id="table_schema"
+                            placeholder="id INTEGER PRIMARY KEY,&#10;name TEXT NOT NULL,&#10;description TEXT,&#10;created_at DATETIME"
+                            rows="4" required></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="primary-button">
+                    <i class="fas fa-plus-circle"></i> Create Table
+                    <span class="loading" style="display: none;"></span>
+                </button>
+            </form>
+        </div>
+        {% endif %}
+
+        {% if session.get('table_created') %}
+        <!-- Data Insertion Section -->
+        <div class="section animate-fade-in">
+            <div class="section-header">
+                <h2><i class="fas fa-plus"></i> Data Insertion</h2>
+                <div class="section-description">Insert data using natural language</div>
+            </div>
+            <form method="POST" action="{{ url_for('insert_data') }}" id="insertForm" class="animated-form">
+                <div class="form-control">
+                    <label for="insert_prompt">
+                        <i class="fas fa-comment-alt"></i> Insert Instructions
+                    </label>
+                    <div class="code-editor">
+                        <textarea name="insert_prompt" id="insert_prompt"
+                            placeholder="Examples:&#10;1. Insert a record with name 'John Doe' and age 25&#10;2. Add new product: name = 'Widget', price = 19.99&#10;3. Create an entry for employee Jane with department 'IT'"
+                            rows="4" required></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="primary-button">
+                    <i class="fas fa-save"></i> Insert Data
+                    <span class="loading" style="display: none;"></span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Querying Section -->
+        <div class="section animate-fade-in">
+            <div class="section-header">
+                <h2><i class="fas fa-search"></i> Query Data</h2>
+                <div class="section-description">Query your data using natural language</div>
+            </div>
+            <form method="POST" action="{{ url_for('execute_query') }}" id="queryForm" class="animated-form">
+                <div class="form-control">
+                    <label for="query_prompt">
+                        <i class="fas fa-comment-alt"></i> Query Instructions
+                    </label>
+                    <div class="code-editor">
+                        <textarea name="query_prompt" id="query_prompt"
+                            placeholder="Examples:&#10;1. Show all records where age is greater than 25&#10;2. Find products with price less than $20&#10;3. List employees in the IT department"
+                            rows="4" required></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="primary-button">
+                    <i class="fas fa-play"></i> Generate and Execute Query
+                    <span class="loading" style="display: none;"></span>
+                </button>
+            </form>
+
+            {% if session.get('generated_sql') %}
+            <div class="result-section animate-fade-in">
+                <h3><i class="fas fa-code"></i> Generated SQL</h3>
+                <pre class="sql-code">{{ session.get('generated_sql') }}</pre>
+            </div>
+            {% endif %}
+
+            {% if session.get('query_result') %}
+            <div class="result-section animate-fade-in">
+                <h3><i class="fas fa-table"></i> Query Result</h3>
+                <div class="table-container">
+                    {{ session.get('query_result')|safe }}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Database type toggle
+        document.getElementById('db_type').addEventListener('change', function () {
+            const sqliteFields = document.getElementById('sqlite-fields');
+            const otherFields = document.getElementById('other-fields');
+            if (this.value === 'sqlite') {
+                sqliteFields.style.display = 'block';
+                otherFields.style.display = 'none';
+            } else {
+                sqliteFields.style.display = 'none';
+                otherFields.style.display = 'grid';
+            }
+        });
+
+        // Password visibility toggle
+        document.querySelectorAll('.toggle-password').forEach(button => {
+            button.addEventListener('click', function () {
+                const input = this.previousElementSibling;
+                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                input.setAttribute('type', type);
+                this.querySelector('i').classList.toggle('fa-eye');
+                this.querySelector('i').classList.toggle('fa-eye-slash');
+            });
+        });
+
+        // Form submission handling with loading states
+        const forms = ['dbForm', 'tableForm', 'insertForm', 'queryForm'];
+        forms.forEach(formId => {
+            const form = document.getElementById(formId);
+            if (form) {
+                form.addEventListener('submit', function () {
+                    const btn = this.querySelector('button[type="submit"]');
+                    const loading = btn.querySelector('.loading');
+                    btn.disabled = true;
+                    loading.style.display = 'inline-block';
+                });
+            }
+        });
+
+        // Auto-resize textareas
+        document.querySelectorAll('textarea').forEach(textarea => {
+            textarea.addEventListener('input', function () {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight + 2) + 'px';
+            });
+        });
+    </script>
+</body>
+
+</html>

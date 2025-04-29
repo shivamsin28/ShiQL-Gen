@@ -52,13 +52,13 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     
-    def _init_(self, name, username, email, password):
+    def __init__(self, name, username, email, password):
         self.name = name
         self.username = username
         self.email = email
         self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         
-    def _repr_(self):
+    def __repr__(self):
         return '<User %r>' % self.username
     
     def check_password(self, password):
@@ -87,12 +87,19 @@ def login():
         if user:
             if user.check_password(password):
                 session['user'] = user.username
-                return redirect(url_for('dashboard'))
+                return redirect(url_for('generate_query'))
             else:
                 flash('Invalid username or password')
         else:
             flash('Invalid username or password')
     return render_template('login.html')
+
+@app.route('/generate_query')
+def generate_query():
+    if 'user' not in session:
+        flash('Please login to access the query generator')
+        return redirect(url_for('login'))
+    return render_template('generate_query.html', username=session['user'])
 
 @app.route("/dashboard")
 def dashboard():
@@ -128,23 +135,178 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html')
 
-@app.route('/generate_query', methods=['GET', 'POST'])
-def generate_query():
-    if 'user' not in session:
-        flash('Please login to generate queries')
-        return redirect(url_for('login'))
+# Login required decorator
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            flash('Please login first', 'error')
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+def get_db_connection(db_type, db_params):
+    try:
+        if db_type == "sqlite":
+            conn = sqlite3.connect(db_params["database"])
+            return conn
+        elif db_type == "mysql":
+            engine = create_engine(
+                f"mysql+mysqlconnector://{db_params['username']}:{db_params['password']}@{db_params['host']}/{db_params['database']}")
+            return engine.connect()
+        elif db_type == "postgresql":
+            engine = create_engine(
+                f"postgresql+psycopg2://{db_params['username']}:{db_params['password']}@{db_params['host']}/{db_params['database']}")
+            return engine.connect()
+    except Exception as e:
+        flash(f"Connection error: {str(e)}", "error")
+        return None
+
+def generate_sql(prompt, schema=None, dialect="sqlite", purpose="query"):
+    if purpose == "create_table":
+        full_prompt = f"Generate a CREATE TABLE SQL statement for {dialect} with the following schema:\n{schema}"
+    elif purpose == "insert":
+        full_prompt = f"Generate an INSERT INTO SQL statement for {dialect} for table {schema} with the following data:\n{prompt}"
+    else:
+        full_prompt = f"Given the following schema:\n{schema}\nand instruction:\n{prompt}\nGenerate a SQL query for {dialect}."
+    
+    try:
+        response = model.generate_content(full_prompt)
+        return clean_sql(response.text)
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+def clean_sql(sql_query):
+    sql_query = re.sub(r'```[a-z]*\n', '', sql_query, flags=re.IGNORECASE)
+    sql_query = re.sub(r'```', '', sql_query, flags=re.IGNORECASE)
+    sql_query = re.sub(r'^sql', '', sql_query, flags=re.IGNORECASE).strip()
+    return sql_query
+
+def execute_sql(sql_query, db_type, db_params, return_results=True):
+    conn = None
+    try:
+        conn = get_db_connection(db_type, db_params)
+        if not conn:
+            return "Failed to connect to database"
         
-    query = None
-    if request.method == 'POST':
-        table_name = request.form.get('table-name')
-        columns = request.form.get('columns').split(',')
-        conditions = request.form.get('conditions').split(',') if request.form.get('conditions') else None
+        # Execute the query first (needed for all query types)
+        if db_type == "sqlite":
+            conn.execute(sql_query)
+            conn.commit()
+        else:
+            conn.execute(text(sql_query))
+            conn.commit()
+        
+        # For SELECT queries or if results are needed after UPDATE/DELETE
+        if return_results:
+            # For UPDATE or DELETE queries, fetch the updated data
+            if sql_query.strip().upper().startswith(('UPDATE', 'DELETE')):
+                table_name = re.search(r'(UPDATE|DELETE FROM)\s+(\w+)', sql_query, re.IGNORECASE).group(2)
+                df = pd.read_sql_query(f"SELECT * FROM {table_name}", conn)
+            else:
+                df = pd.read_sql_query(sql_query, conn)
+            return df.to_html(classes='table table-striped', index=False)
+        else:
+            return "Query executed successfully"
+    except Exception as e:
+        return f"Error executing query: {str(e)}"
+    finally:
+        if conn:
+            conn.close()
 
-        # Use SQLQueryGenerator to generate the query
-        query_generator = SQLQueryGenerator()
-        query = query_generator.select(table=table_name, columns=columns, conditions=conditions)
+@app.route('/connect_database', methods=['POST'])
+@login_required
+def connect_database():
+    db_type = request.form['db_type']
+    db_params = {}
+    
+    if db_type == 'sqlite':
+        db_params['database'] = request.form['database']
+    else:
+        db_params['host'] = request.form['host']
+        db_params['username'] = request.form['username']
+        db_params['password'] = request.form['password']
+        db_params['database'] = request.form['database_name']
 
-    return render_template('generate_query.html', query=query)
+    conn = get_db_connection(db_type, db_params)
+    if conn:
+        conn.close()
+        session['db_connected'] = True
+        session['db_type'] = db_type
+        session['connection_params'] = db_params
+        flash('Successfully connected to database!', 'success')
+    else:
+        flash('Failed to connect to database', 'error')
+    
+    return redirect(url_for('generate_query'))
+
+@app.route('/create_table', methods=['POST'])
+@login_required
+def create_table():
+    if not session.get('db_connected'):
+        flash('Please connect to a database first', 'error')
+        return redirect(url_for('generate_query'))
+    
+    table_name = request.form['table_name']
+    table_schema = request.form['table_schema']
+    
+    create_query = generate_sql(None, f"CREATE TABLE {table_name} ({table_schema})", 
+                              session['db_type'], "create_table")
+    result = execute_sql(create_query, session['db_type'], 
+                        session['connection_params'], False)
+    
+    if "Error" not in str(result):
+        session['table_created'] = True
+        session['current_table'] = table_name
+        flash(f"Table '{table_name}' created successfully!", 'success')
+    else:
+        flash(result, 'error')
+    
+    return redirect(url_for('generate_query'))
+
+@app.route('/insert_data', methods=['POST'])
+@login_required
+def insert_data():
+    if not session.get('table_created'):
+        flash('Please create a table first', 'error')
+        return redirect(url_for('generate_query'))
+    
+    insert_prompt = request.form['insert_prompt']
+    insert_query = generate_sql(insert_prompt, session['current_table'], 
+                              session['db_type'], "insert")
+    result = execute_sql(insert_query, session['db_type'], 
+                        session['connection_params'], False)
+    
+    if "Error" not in str(result):
+        flash('Data inserted successfully!', 'success')
+    else:
+        flash(result, 'error')
+    
+    return redirect(url_for('generate_query'))
+
+@app.route('/execute_query', methods=['POST'])
+@login_required
+def execute_query():
+    if not session.get('table_created'):
+        flash('Please create a table first', 'error')
+        return redirect(url_for('generate_query'))
+    
+    query_prompt = request.form['query_prompt']
+    query = generate_sql(query_prompt, session['current_table'], 
+                        session['db_type'], "query")
+    result = execute_sql(query, session['db_type'], session['connection_params'])
+    
+    if "Error" not in str(result):
+        session['query_result'] = result
+        session['generated_sql'] = query
+        flash('Query executed successfully!', 'success')
+    else:
+        flash(result, 'error')
+        session['query_result'] = None
+        session['generated_sql'] = None
+    
+    return redirect(url_for('generate_query'))
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
