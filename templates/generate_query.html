@@ -11,9 +11,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         :root {
-            --primary-color: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary-color: #7c3aed;
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --light: #ffffff;
+            --accent: #00f2fe;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
             --background-color: #f8fafc;
             --surface-color: #ffffff;
             --text-color: #1e293b;
@@ -24,13 +28,15 @@
         }
 
         body {
-            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, var(--background-color) 0%, #eef2ff 100%);
-            color: var(--text-color);
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--darker);
+            color: var(--light);
             margin: 0;
             padding: 0;
             line-height: 1.6;
             min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
         }
 
         .container {
@@ -47,7 +53,7 @@
             position: relative;
             padding-bottom: 1rem;
             font-weight: 800;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -61,25 +67,23 @@
         }
 
         .section {
-            background: var(--surface-color);
+            background: rgba(10, 10, 10, 0.8);
             padding: 2rem;
             border-radius: 16px;
             margin-bottom: 2rem;
-            box-shadow: 0 4px 6px var(--shadow-color),
-                0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 242, 254, 0.1);
             backdrop-filter: blur(10px);
         }
 
         .section:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 12px var(--shadow-color),
-                0 15px 20px -3px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 12px rgba(0, 242, 254, 0.1);
         }
 
         .section h2 {
-            color: var(--primary-color);
+            color: var(--primary);
             margin-top: 0;
             margin-bottom: 1.5rem;
             font-size: 1.5rem;
@@ -91,7 +95,7 @@
 
         .section h2 i {
             font-size: 1.25rem;
-            color: var(--secondary-color);
+            color: var(--secondary);
         }
 
         .section-header {
@@ -130,13 +134,14 @@
             width: 100%;
             padding: 0.75rem 1rem;
             margin-bottom: 1rem;
-            border: 2px solid var(--border-color);
+            border: 1px solid rgba(0, 242, 254, 0.2);
             border-radius: 8px;
             box-sizing: border-box;
             font-family: inherit;
             font-size: 1rem;
             transition: all 0.3s ease;
-            background-color: #f8fafc;
+            background-color: rgba(5, 5, 5, 0.8);
+            color: var(--light);
         }
 
         input[type="text"]:focus,
@@ -144,9 +149,10 @@
         select:focus,
         textarea:focus {
             outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-            background-color: #ffffff;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.1);
+            background-color: rgba(5, 5, 5, 0.9);
+            transform: translateY(-2px);
         }
 
         textarea {
@@ -184,12 +190,12 @@
         }
 
         .toggle-password:hover {
-            color: var(--primary-color);
+            color: var(--primary);
         }
 
         button {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: var(--dark);
             border: none;
             padding: 0.75rem 1.5rem;
             font-size: 1rem;
@@ -205,27 +211,27 @@
             letter-spacing: 0.5px;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.2);
         }
 
         button::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
+            left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
-            transition: transform 0.3s ease;
-            transform: translateY(-100%);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.5s ease;
         }
 
         button:hover::before {
-            transform: translateY(0);
+            left: 100%;
         }
 
         button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4);
         }
 
         button:active {
@@ -233,7 +239,7 @@
         }
 
         .primary-button {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
         }
 
         .alert {
@@ -278,15 +284,15 @@
         }
 
         .sql-code {
-            background-color: #1e1e2e;
-            color: #cdd6f4;
+            background-color: rgba(5, 5, 5, 0.8);
+            color: var(--light);
             padding: 1.5rem;
             border-radius: 12px;
             font-family: 'JetBrains Mono', 'Fira Code', monospace;
             white-space: pre-wrap;
             margin: 1rem 0;
             overflow-x: auto;
-            border: 1px solid #313244;
+            border: 1px solid rgba(0, 242, 254, 0.1);
             position: relative;
         }
 
@@ -295,29 +301,29 @@
             position: absolute;
             top: 0.5rem;
             right: 1rem;
-            color: #6c7086;
+            color: var(--primary);
             font-size: 0.875rem;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
         }
 
         .sql-code .keyword {
-            color: #ff79c6;
+            color: var(--primary);
         }
 
         .sql-code .string {
-            color: #50fa7b;
+            color: var(--secondary);
         }
 
         .sql-code .number {
-            color: #bd93f9;
+            color: var(--accent);
         }
 
         .sql-code .operator {
-            color: #ff79c6;
+            color: var(--primary);
         }
 
         .sql-code .comment {
-            color: #6272a4;
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .code-editor {
@@ -350,7 +356,7 @@
         }
 
         .result-section h3 {
-            color: var(--secondary-color);
+            color: var(--secondary);
             margin-bottom: 1rem;
             font-size: 1.25rem;
             display: flex;
@@ -383,7 +389,7 @@
         th {
             background: linear-gradient(to right, #f8fafc, #ffffff);
             font-weight: 600;
-            color: var(--primary-color);
+            color: var(--primary);
             text-transform: uppercase;
             font-size: 0.85rem;
             letter-spacing: 0.05em;
@@ -522,7 +528,7 @@
             gap: 0.5rem;
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary-color);
+            color: var(--primary);
             text-decoration: none;
             margin-bottom: 1.5rem;
         }
@@ -549,7 +555,7 @@
         }
 
         .auth-form .form-control label i {
-            color: var(--primary-color);
+            color: var(--primary);
         }
 
         .auth-button {
@@ -564,7 +570,7 @@
         }
 
         .auth-links a {
-            color: var(--primary-color);
+            color: var(--primary);
             text-decoration: none;
             font-weight: 500;
         }
@@ -575,12 +581,14 @@
 
         /* App navigation styles */
         .app-nav {
-            background: white;
+            background: rgba(10, 10, 10, 0.8);
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             padding: 1rem;
             position: sticky;
             top: 0;
             z-index: 100;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 242, 254, 0.1);
         }
 
         .nav-content {
@@ -596,13 +604,13 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            color: var(--text-color);
+            color: var(--light);
             font-weight: 500;
             margin-right: 1.5rem;
         }
 
         .welcome-text i {
-            color: var(--primary-color);
+            color: var(--primary);
         }
 
         .app-nav .nav-links {
@@ -624,7 +632,7 @@
 
         .app-nav .nav-link:hover {
             background: var(--background-color);
-            color: var(--primary-color);
+            color: var(--primary);
         }
 
         @media (max-width: 768px) {
