@@ -215,7 +215,6 @@ def execute_sql(sql_query, db_type, db_params, return_results=True):
             conn.close()
 
 @app.route('/connect_database', methods=['POST'])
-@login_required
 def connect_database():
     db_type = request.form['db_type']
     db_params = {}
@@ -241,7 +240,6 @@ def connect_database():
     return redirect(url_for('generate_query'))
 
 @app.route('/create_table', methods=['POST'])
-@login_required
 def create_table():
     if not session.get('db_connected'):
         flash('Please connect to a database first', 'error')
@@ -265,7 +263,6 @@ def create_table():
     return redirect(url_for('generate_query'))
 
 @app.route('/insert_data', methods=['POST'])
-@login_required
 def insert_data():
     if not session.get('table_created'):
         flash('Please create a table first', 'error')
@@ -285,7 +282,6 @@ def insert_data():
     return redirect(url_for('generate_query'))
 
 @app.route('/execute_query', methods=['POST'])
-@login_required
 def execute_query():
     if not session.get('table_created'):
         flash('Please create a table first', 'error')
