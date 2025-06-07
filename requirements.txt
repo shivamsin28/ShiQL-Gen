@@ -49,6 +49,7 @@ Flask-Bcrypt==1.0.1
 Flask-Session==0.8.0
 Flask-SQLAlchemy==3.1.1
 Flask-WTF==1.2.2
+gunicorn==23.0.0
 fonttools==4.51.0
 fpdf2==2.8.2
 fqdn==1.5.1
@@ -66,7 +67,6 @@ googleapis-common-protos==1.70.0
 greenlet==3.1.1
 grpcio==1.72.0rc1
 grpcio-status==1.71.0
-gunicorn==23.0.0
 h11==0.14.0
 h2==4.2.0
 hpack==4.1.0
@@ -231,3 +231,4 @@ win-inet-pton @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/wi
 wsproto==1.2.0
 WTForms==3.2.1
 zstandard @ file:///C:/b/abs_31t8xmrv_h/croot/zstandard_1731356578015/work
+
