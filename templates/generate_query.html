@@ -199,6 +199,28 @@
         --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
     }
 
+    body, .container {
+        font-family: inherit;
+    }
+
+    h1, h2, h3, .page-title {
+        font-family: inherit;
+        letter-spacing: normal;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    select,
+    textarea {
+        font-family: inherit;
+    }
+
+    textarea,
+    .code-editor textarea,
+    .sql-code {
+        font-family: inherit;
+    }
+
     .page-title {
         position: relative;
         display: inline-block;
@@ -266,8 +288,8 @@
     .section h2 i {
         font-size: 1.25rem;
         color: var(--secondary);
-    }
-
+    }     
+     
     .section-header {
         margin-bottom: 2rem;
     }
@@ -320,7 +342,7 @@
 
     textarea {
         min-height: 120px;
-        font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+        font-family: inherit;
         resize: vertical;
         line-height: 1.6;
     }
@@ -437,7 +459,7 @@
         color: var(--light);
         padding: 1.5rem;
         border-radius: 12px;
-        font-family: 'JetBrains Mono', 'Fira Code', monospace;
+        font-family: inherit;
         white-space: pre-wrap;
         margin: 1rem 0;
         overflow-x: auto;
@@ -452,7 +474,7 @@
         right: 1rem;
         color: var(--primary);
         font-size: 0.875rem;
-        font-family: 'Space Grotesk', sans-serif;
+        font-family: inherit;
     }
 
     .code-editor {
@@ -463,7 +485,7 @@
 
     .code-editor textarea {
         background: rgba(5, 5, 5, 0.8);
-        font-family: 'JetBrains Mono', monospace;
+        font-family: inherit;
         padding: 1rem;
         margin: 0;
         border-radius: 12px;
@@ -513,7 +535,7 @@
         font-size: 0.85rem;
         letter-spacing: 0.05em;
     }
-
+       
     tr:hover {
         background-color: rgba(0, 242, 254, 0.05);
     }
@@ -643,7 +665,7 @@
     document.querySelectorAll('textarea').forEach(textarea => {
         textarea.addEventListener('input', function () {
             this.style.height = 'auto';
-            this.style.height = (this.scrollHeight + 2) + 'px';
+            this.style.height = (this.scrollHeight + 2) + 'px'; 
         });
     });
 </script>

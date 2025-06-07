@@ -1,0 +1,10 @@
+Flask 
+Flask-Session 
+Flask-SQLAlchemy 
+flask-bcrypt 
+python-dotenv 
+google-generativeai 
+pandas 
+sqlalchemy 
+mysql-connector-python 
+psycopg2-binary 
